@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNU IdeaSpark - Trang Chủ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="https://sso.dainam.edu.vn/logo.png">
+    <style>
+        :root {
+            --theme-default: #f37423;
+            --theme-secondary: #eeb82f;
+            --primary-color: #1949a9;
+            --ideaspark-blue: #f37423;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--ideaspark-blue) 100%);
+        }
+        
+        .text-primary {
+            color: var(--primary-color);
+        }
+        
+        .bg-primary {
+            background-color: var(--primary-color);
+        }
+        
+        .border-primary {
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary {
+            background-color: var(--ideaspark-blue);
+        }
+        
+        .btn-primary:hover {
+            background-color: #e0661d;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .category-badge {
+            transition: all 0.3s ease;
+        }
+        
+        .category-badge:hover {
+            transform: scale(1.05);
+        }
+        
+        .vote-button:hover {
+            transform: scale(1.1);
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-md">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <img src="https://sso.dainam.edu.vn/logo.png" alt="DNU Logo" class="h-12 w-12">
+                    <div>
+                        <h1 class="text-xl font-bold">DNU IdeaSpark</h1>
+                        <p class="text-sm opacity-80">Nền tảng góp ý và cải tiến Đại học Đại Nam</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="login-btn" class="bg-white text-primary px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Đăng nhập
+                    </button>
+                    <button id="register-btn" class="bg-primary text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-800 transition">
+                        <i class="fas fa-user-plus mr-2"></i>Đăng ký
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- User Profile Section -->
+        <div class="bg-white rounded-xl shadow-md p-8 mb-8">
+            <div class="flex flex-col md:flex-row items-start md:items-center space-y-6 md:space-y-0 md:space-x-8">
+                <!-- Avatar and Basic Info -->
+                <div class="flex flex-col items-center text-center">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User Avatar" class="w-32 h-32 rounded-full border-4 border-primary">
+                    <h2 class="text-2xl font-bold mt-4 text-gray-800">Nguyễn Thị Mai</h2>
+                    <span class="text-gray-600 mt-1">Khoa Công nghệ thông tin - K18</span>
+                    <button class="mt-4 px-4 py-2 bg-primary text-white rounded-lg hover:bg-opacity-90 transition">
+                        <i class="fas fa-user-edit mr-2"></i>Chỉnh sửa hồ sơ
+                    </button>
+                </div>
+
+                <!-- Points and Badges -->
+                <div class="flex-1">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Thành tích</h3>
+                        <div class="flex items-center bg-gray-50 p-4 rounded-lg">
+                            <div class="flex items-center mr-6">
+                                <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-star text-yellow-500 text-xl"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm text-gray-500">Tổng điểm</div>
+                                    <div class="text-xl font-bold">145</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-medal text-blue-500 text-xl"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm text-gray-500">Huy hiệu</div>
+                                    <div class="text-xl font-bold">3</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Badges Earned -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Huy hiệu đạt được</h3>
+                        <div class="flex space-x-4">
+                            <div class="flex flex-col items-center">
+                                <div class="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center text-white">
+                                    <i class="fas fa-lightbulb text-2xl"></i>
+                                </div>
+                                <span class="text-xs mt-2 text-center">Nhà đổi mới</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-white">
+                                    <i class="fas fa-rocket text-2xl"></i>
+                                </div>
+                                <span class="text-xs mt-2 text-center">Top ý tưởng</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center text-white">
+                                    <i class="fas fa-users text-2xl"></i>
+                                </div>
+                                <span class="text-xs mt-2 text-center">Cống hiến</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- User's Ideas Section -->
+        <div class="bg-white rounded-xl shadow-md p-6">
+            <h2 class="text-xl font-bold text-gray-800 mb-6">
+                <i class="fas fa-lightbulb text-primary mr-2"></i>
+                Ý tưởng đã đóng góp (5)
+            </h2>
+
+            <div class="space-y-4">
+                <!-- Idea 1 -->
+                <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition">
+                    <div class="flex justify-between items-start mb-2">
+                        <a href="#" class="text-lg font-medium text-primary hover:underline">Lắp đặt máy lọc nước tại các khu vực giảng đường</a>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Đã phê duyệt</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-3">Đề xuất lắp đặt thêm các máy lọc nước tại các khu vực giảng đường A, B, C để sinh viên có thể dễ dàng tiếp cận nước uống sạch trong giờ học.</p>
+                    <div class="flex justify-between text-sm text-gray-500">
+                        <span><i class="far fa-thumbs-up mr-1"></i> 45 bình chọn</span>
+                        <span><i class="far fa-clock mr-1"></i> 2 ngày trước</span>
+                    </div>
+                </div>
+
+                <!-- Idea 2 -->
+                <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition">
+                    <div class="flex justify-between items-start mb-2">
+                        <a href="#" class="text-lg font-medium text-primary hover:underline">Bổ sung tài liệu tham khảo tại thư viện</a>
+                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs">Đang xem xét</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-3">Kiến nghị bổ sung các đầu sách mới về AI và Machine Learning tại thư viện trường để phục vụ nhu cầu học tập và nghiên cứu của sinh viên.</p>
+                    <div class="flex justify-between text-sm text-gray-500">
+                        <span><i class="far fa-thumbs-up mr-1"></i> 28 bình chọn</span>
+                        <span><i class="far fa-clock mr-1"></i> 1 tuần trước</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">DNU IdeaSpark</h3>
+                    <p class="text-gray-400">Nền tảng góp ý và cải tiến Đại học Đại Nam, nơi mọi ý tưởng đều được trân trọng.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Liên kết</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Trang chủ Đại Nam</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Thông báo</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Hướng dẫn sử dụng</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Câu hỏi thường gặp</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Thông tin</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Về chúng tôi</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Điều khoản sử dụng</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Chính sách bảo mật</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Liên hệ</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center"><i class="fas fa-map-marker-alt mr-2 text-gray-400"></i> <span class="text-gray-400">Số 56 Vũ Trọng Phụng, Thanh Xuân, Hà Nội</span></li>
+                        <li class="flex items-center"><i class="fas fa-phone-alt mr-2 text-gray-400"></i> <span class="text-gray-400">024 1234 5678</span></li>
+                        <li class="flex items-center"><i class="fas fa-envelope mr-2 text-gray-400"></i> <span class="text-gray-400">ideaspark@dainam.edu.vn</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
+                <p>© 2023 DNU IdeaSpark. Bản quyền thuộc về Trường Đại học Đại Nam.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl w-full max-w-md p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Đăng nhập</h2>
+                <button id="close-login-modal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form class="space-y-4">
+                <div>
+                    <label for="modal-username" class="block text-sm font-medium text-gray-700 mb-1">Tên đăng nhập</label>
+                    <div class="relative">
+                        <input type="text" id="modal-username" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 pl-10" placeholder="Nhập tên đăng nhập" required>
+                        <i class="fas fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                </div>
+                <div>
+                    <label for="modal-password" class="block text-sm font-medium text-gray-700 mb-1">Mật khẩu</label>
+                    <div class="relative">
+                        <input type="password" id="modal-password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 pl-10" placeholder="Nhập mật khẩu" required>
+                        <i class="fas fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input id="modal-remember" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                        <label for="modal-remember" class="ml-2 block text-sm text-gray-700">Ghi nhớ đăng nhập</label>
+                    </div>
+                    <a href="#" class="text-sm text-blue-600 hover:text-blue-800">Quên mật khẩu?</a>
+                </div>
+                <button type="submit" class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 font-medium">
+                    Đăng nhập
+                </button>
+            </form>
+            <div class="text-center mt-4">
+                <p class="text-sm text-gray-600">Chưa có tài khoản? <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">Đăng ký ngay</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle login modal
+        const loginBtn = document.getElementById('login-btn');
+        const registerBtn = document.getElementById('register-btn');
+        const loginModal = document.getElementById('login-modal');
+        const closeLoginModal = document.getElementById('close-login-modal');
+
+        loginBtn.addEventListener('click', () => {
+            loginModal.classList.remove('hidden');
+        });
+
+        registerBtn.addEventListener('click', () => {
+            // In a real implementation, this would redirect to register page
+            alert('Chuyển hướng đến trang đăng ký');
+        });
+
+        closeLoginModal.addEventListener('click', () => {
+            loginModal.classList.add('hidden');
+        });
+
+        // Close modal when clicking outside
+        loginModal.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                loginModal.classList.add('hidden');
+            }
+        });
+
+        // Handle idea submission button
+        document.querySelectorAll('.btn-primary').forEach(button => {
+            button.addEventListener('click', () => {
+                // In a real implementation, check if user is logged in
+                // If not logged in, show login modal
+                loginModal.classList.remove('hidden');
+            });
+        });
+
+        // Handle vote buttons (show login if not authenticated)
+        document.querySelectorAll('.vote-button').forEach(button => {
+            button.addEventListener('click', () => {
+                // In a real implementation, check if user is logged in
+                // If not logged in, show login modal
+                loginModal.classList.remove('hidden');
+            });
+        });
+
+        // Filter buttons
+        document.querySelectorAll('.category-badge').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                // In a real implementation, this would filter ideas
+                alert('Lọc ý tưởng theo danh mục: ' + button.textContent.trim());
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                // In a real implementation, this would search ideas
+                alert('Tìm kiếm ý tưởng với từ khóa: ' + searchInput.value);
+            }
+        });
+    </script>
+</body>
+</html>
