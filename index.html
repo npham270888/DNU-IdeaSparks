@@ -163,7 +163,8 @@
                 <!-- Idea Cards -->
                 <div class="space-y-6">
                     <!-- Idea 1 -->
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden transition duration-300 card-hover fade-in">
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden transition duration-300 card-hover fade-in card-redirect" 
+                         style="cursor: pointer;">
                         <div class="p-6">
                             <div class="flex justify-between items-start mb-4">
                                 <div>
@@ -531,6 +532,13 @@
                 // In a real implementation, this would filter ideas
                 alert('Lọc ý tưởng theo danh mục: ' + button.textContent.trim());
             });
+        });
+
+        // Redirect Ideas
+        document.querySelectorAll('.card-redirect').forEach(card => {
+          card.addEventListener('click', function() {
+            window.location.href = '/idea_details.html';
+          });
         });
 
         // Search functionality
