@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNU IdeaSpark - Trang Chủ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="https://sso.dainam.edu.vn/logo.png">
+    <style>
+        :root {
+            --theme-default: #f37423;
+            --theme-secondary: #eeb82f;
+            --primary-color: #1949a9;
+            --ideaspark-blue: #f37423;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--ideaspark-blue) 100%);
+        }
+        
+        .text-primary {
+            color: var(--primary-color);
+        }
+        
+        .bg-primary {
+            background-color: var(--primary-color);
+        }
+        
+        .border-primary {
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary {
+            background-color: var(--ideaspark-blue);
+        }
+        
+        .btn-primary:hover {
+            background-color: #e0661d;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .category-badge {
+            transition: all 0.3s ease;
+        }
+        
+        .category-badge:hover {
+            transform: scale(1.05);
+        }
+        
+        .vote-button:hover {
+            transform: scale(1.1);
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-md">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <img src="https://sso.dainam.edu.vn/logo.png" alt="DNU Logo" class="h-12 w-12">
+                    <div>
+                        <h1 class="text-xl font-bold">DNU IdeaSpark</h1>
+                        <p class="text-sm opacity-80">Nền tảng góp ý và cải tiến Đại học Đại Nam</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="login-btn" class="bg-white text-primary px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Đăng nhập
+                    </button>
+                    <button id="register-btn" class="bg-primary text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-800 transition">
+                        <i class="fas fa-user-plus mr-2"></i>Đăng ký
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Idea Detail Section -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">Cơ sở vật chất</span>
+                    <span class="ml-2 text-xs text-gray-500"><i class="far fa-clock mr-1"></i>2 ngày trước</span>
+                </div>
+                <div class="flex items-center text-yellow-500">
+                    <i class="fas fa-star"></i>
+                    <span class="ml-1 text-sm font-medium">Đang xem xét</span>
+                </div>
+            </div>
+            
+            <h1 class="text-2xl font-bold text-gray-800 mb-4">Lắp đặt máy lọc nước tại các khu vực giảng đường</h1>
+            
+            <div class="prose max-w-none mb-6 text-gray-600">
+                <p>Đề xuất lắp đặt thêm các máy lọc nước tại các khu vực giảng đường A, B, C để sinh viên có thể dễ dàng tiếp cận nước uống sạch trong giờ học.</p>
+                <p>Hiện tại, sinh viên phải di chuyển khá xa để tìm nước uống, làm gián đoạn thời gian học tập. Việc bổ sung các máy lọc nước này sẽ góp phần nâng cao chất lượng học tập và sức khỏe cho sinh viên.</p>
+            </div>
+            
+            <!-- Attachments -->
+            <div class="mb-6">
+                <h3 class="text-sm font-medium text-gray-700 mb-2">Tệp đính kèm:</h3>
+                <div class="flex space-x-2">
+                    <a href="#" class="inline-flex items-center px-3 py-2 border border-gray-200 rounded-lg hover:bg-gray-50">
+                        <i class="fas fa-file-pdf text-red-500 mr-2"></i>
+                        <span class="text-sm">Proposal.pdf</span>
+                    </a>
+                    <a href="#" class="inline-flex items-center px-3 py-2 border border-gray-200 rounded-lg hover:bg-gray-50">
+                        <i class="fas fa-image text-blue-500 mr-2"></i>
+                        <span class="text-sm">Location-map.jpg</span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Status History -->
+            <div class="mb-6">
+                <h3 class="text-sm font-medium text-gray-700 mb-2">Lịch sử trạng thái:</h3>
+                <div class="flex items-center space-x-2 text-sm">
+                    <div class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full">Đã nhận</div>
+                    <i class="fas fa-arrow-right text-gray-400"></i>
+                    <div class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full">Đang xem xét</div>
+                    <i class="fas fa-arrow-right text-gray-400"></i>
+                    <div class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full">Đã phê duyệt</div>
+                </div>
+            </div>
+            
+            <!-- Author and Votes -->
+            <div class="flex justify-between items-center border-t pt-4">
+                <div class="flex items-center">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Tác giả" class="w-10 h-10 rounded-full">
+                    <div class="ml-3">
+                        <div class="text-sm font-medium text-gray-900">Nguyễn Thị Mai</div>
+                        <div class="text-sm text-gray-500">Sinh viên K18</div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="flex flex-col items-center">
+                        <button class="vote-button bg-gray-100 text-gray-800 px-4 py-2 rounded-lg flex items-center transition hover:bg-green-50">
+                            <i class="far fa-thumbs-up text-green-600 mr-2"></i>
+                            <span class="font-medium">45</span>
+                        </button>
+                        <span class="text-xs text-gray-500 mt-1">Bạn đã bình chọn</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <button class="vote-button bg-gray-100 text-gray-800 px-4 py-2 rounded-lg flex items-center transition hover:bg-red-50">
+                            <i class="far fa-thumbs-down text-red-600 mr-2"></i>
+                            <span class="font-medium">2</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Comments Section -->
+        <div class="bg-white rounded-xl shadow-md p-6">
+            <h2 class="text-xl font-bold text-gray-800 mb-6">
+                <i class="far fa-comments text-primary mr-2"></i>
+                Bình luận (12)
+            </h2>
+            
+            <!-- Add Comment Form -->
+            <div class="mb-8">
+                <textarea class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" rows="3" placeholder="Thêm bình luận của bạn..."></textarea>
+                <div class="flex justify-between items-center mt-2">
+                    <div class="text-xs text-gray-500">
+                        <button class="text-blue-500 hover:text-blue-700 mr-3">
+                            <i class="fas fa-paperclip mr-1"></i> Đính kèm file
+                        </button>
+                    </div>
+                    <button class="bg-primary text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition">
+                        Gửi bình luận
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Comments List -->
+            <div class="space-y-6">
+                <!-- Comment 1 -->
+                <div class="flex">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" class="w-10 h-10 rounded-full flex-shrink-0">
+                    <div class="ml-3 flex-1">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="font-medium text-gray-900">Trần Văn Nam</span>
+                                <span class="text-xs text-gray-500">2 giờ trước</span>
+                            </div>
+                            <p class="text-gray-700">Ý tưởng rất thiết thực, đặc biệt là trong mùa hè nóng bức như hiện nay!</p>
+                        </div>
+                        
+                        <!-- Reply Controls -->
+                        <div class="flex items-center mt-2 space-x-4 text-xs">
+                            <button class="text-blue-500 hover:text-blue-700">Trả lời</button>
+                            <button class="text-gray-500 hover:text-gray-700">2 phản hồi</button>
+                        </div>
+                        
+                        <!-- Nested Comment -->
+                        <div class="ml-6 mt-4">
+                            <div class="flex">
+                                <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="User" class="w-8 h-8 rounded-full flex-shrink-0">
+                                <div class="ml-3">
+                                    <div class="bg-gray-50 p-3 rounded-lg">
+                                        <div class="flex justify-between items-center mb-1">
+                                            <span class="text-sm font-medium text-gray-900">Lê Thị Hương</span>
+                                            <span class="text-xs text-gray-500">1 giờ trước</span>
+                                        </div>
+                                        <p class="text-sm text-gray-700">Mình đồng ý, đặc biệt là ở giảng đường A rất thiếu điểm lấy nước.</p>
+                                    </div>
+                                    <div class="flex items-center mt-1 text-xs">
+                                        <button class="text-blue-500 hover:text-blue-700">Trả lời</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Comment 2 -->
+                <div class="flex">
+                    <img src="https://randomuser.me/api/portraits/men/46.jpg" alt="User" class="w-10 h-10 rounded-full flex-shrink-0">
+                    <div class="ml-3 flex-1">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="font-medium text-gray-900">Phạm Xuân Thành</span>
+                                <span class="text-xs text-gray-500">5 giờ trước</span>
+                            </div>
+                            <p class="text-gray-700">Đề xuất nên lắp ở cả tầng 3 nữa vì tầng này có nhiều phòng học, sinh viên đông.</p>
+                        </div>
+                        <div class="flex items-center mt-2 text-xs">
+                            <button class="text-blue-500 hover:text-blue-700">Trả lời</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">DNU IdeaSpark</h3>
+                    <p class="text-gray-400">Nền tảng góp ý và cải tiến Đại học Đại Nam, nơi mọi ý tưởng đều được trân trọng.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Liên kết</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Trang chủ Đại Nam</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Thông báo</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Hướng dẫn sử dụng</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Câu hỏi thường gặp</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Thông tin</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Về chúng tôi</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Điều khoản sử dụng</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Chính sách bảo mật</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Liên hệ</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center"><i class="fas fa-map-marker-alt mr-2 text-gray-400"></i> <span class="text-gray-400">Số 56 Vũ Trọng Phụng, Thanh Xuân, Hà Nội</span></li>
+                        <li class="flex items-center"><i class="fas fa-phone-alt mr-2 text-gray-400"></i> <span class="text-gray-400">024 1234 5678</span></li>
+                        <li class="flex items-center"><i class="fas fa-envelope mr-2 text-gray-400"></i> <span class="text-gray-400">ideaspark@dainam.edu.vn</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
+                <p>© 2023 DNU IdeaSpark. Bản quyền thuộc về Trường Đại học Đại Nam.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl w-full max-w-md p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Đăng nhập</h2>
+                <button id="close-login-modal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form class="space-y-4">
+                <div>
+                    <label for="modal-username" class="block text-sm font-medium text-gray-700 mb-1">Tên đăng nhập</label>
+                    <div class="relative">
+                        <input type="text" id="modal-username" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 pl-10" placeholder="Nhập tên đăng nhập" required>
+                        <i class="fas fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                </div>
+                <div>
+                    <label for="modal-password" class="block text-sm font-medium text-gray-700 mb-1">Mật khẩu</label>
+                    <div class="relative">
+                        <input type="password" id="modal-password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 pl-10" placeholder="Nhập mật khẩu" required>
+                        <i class="fas fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input id="modal-remember" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                        <label for="modal-remember" class="ml-2 block text-sm text-gray-700">Ghi nhớ đăng nhập</label>
+                    </div>
+                    <a href="#" class="text-sm text-blue-600 hover:text-blue-800">Quên mật khẩu?</a>
+                </div>
+                <button type="submit" class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 font-medium">
+                    Đăng nhập
+                </button>
+            </form>
+            <div class="text-center mt-4">
+                <p class="text-sm text-gray-600">Chưa có tài khoản? <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">Đăng ký ngay</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle login modal
+        const loginBtn = document.getElementById('login-btn');
+        const registerBtn = document.getElementById('register-btn');
+        const loginModal = document.getElementById('login-modal');
+        const closeLoginModal = document.getElementById('close-login-modal');
+
+        loginBtn.addEventListener('click', () => {
+            loginModal.classList.remove('hidden');
+        });
+
+        registerBtn.addEventListener('click', () => {
+            // In a real implementation, this would redirect to register page
+            alert('Chuyển hướng đến trang đăng ký');
+        });
+
+        closeLoginModal.addEventListener('click', () => {
+            loginModal.classList.add('hidden');
+        });
+
+        // Close modal when clicking outside
+        loginModal.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                loginModal.classList.add('hidden');
+            }
+        });
+
+        // Handle idea submission button
+        document.querySelectorAll('.btn-primary').forEach(button => {
+            button.addEventListener('click', () => {
+                // In a real implementation, check if user is logged in
+                // If not logged in, show login modal
+                loginModal.classList.remove('hidden');
+            });
+        });
+
+        // Handle vote buttons (show login if not authenticated)
+        document.querySelectorAll('.vote-button').forEach(button => {
+            button.addEventListener('click', () => {
+                // In a real implementation, check if user is logged in
+                // If not logged in, show login modal
+                loginModal.classList.remove('hidden');
+            });
+        });
+
+        // Filter buttons
+        document.querySelectorAll('.category-badge').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                // In a real implementation, this would filter ideas
+                alert('Lọc ý tưởng theo danh mục: ' + button.textContent.trim());
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                // In a real implementation, this would search ideas
+                alert('Tìm kiếm ý tưởng với từ khóa: ' + searchInput.value);
+            }
+        });
+    </script>
+</body>
+</html>
