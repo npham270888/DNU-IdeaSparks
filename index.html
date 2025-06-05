@@ -507,12 +507,12 @@
         });
 
         // Handle idea submission button
-        document.querySelectorAll('.btn-primary').forEach(button => {
-            button.addEventListener('click', () => {
-                // In a real implementation, check if user is logged in
-                // If not logged in, show login modal
-                loginModal.classList.remove('hidden');
-            });
+        // Handle login form submission and redirect
+        document.querySelector('#login-modal form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // TODO: Add real authentication logic here.
+            // After successful login, redirect:
+            window.location.href = "/submit_idea.html";
         });
 
         // Handle vote buttons (show login if not authenticated)
