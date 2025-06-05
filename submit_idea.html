@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNU IdeaSpark - Gửi Ý Tưởng Mới</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <!-- SimpleMDE Editor -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="https://sso.dainam.edu.vn/logo.png">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #1949a9 0%, #f37423 100%);
+        }
+        .text-primary {
+            color: #1949a9;
+        }
+        .bg-primary {
+            background-color: #1949a9;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-md">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="flex items-center space-x-4">
+                    <img src="https://sso.dainam.edu.vn/logo.png" alt="DNU Logo" class="h-12 w-12">
+                    <div>
+                        <h1 class="text-xl font-bold">DNU IdeaSpark</h1>
+                        <p class="text-sm opacity-80">Nền tảng góp ý và cải tiến Đại học Đại Nam</p>
+                    </div>
+                </a>
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="bg-white text-primary px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition">
+                        <i class="fas fa-home mr-2"></i>Trang chủ
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">
+                <i class="fas fa-lightbulb text-yellow-500 mr-2"></i>Gửi Ý Tưởng Mới
+            </h2>
+
+            <form id="submit-idea-form" class="bg-white rounded-xl shadow-lg p-6">
+                <!-- Title Field -->
+                <div class="mb-6">
+                    <label for="idea-title" class="block text-sm font-medium text-gray-700 mb-1">
+                        Tiêu đề ý tưởng <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" id="idea-title" required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Nhập tiêu đề ý tưởng (tối đa 200 ký tự)" maxlength="200">
+                    <div id="title-count" class="text-xs text-gray-500 mt-1 text-right">0/200 ký tự</div>
+                </div>
+
+                <!-- Category Selection -->
+                <div class="mb-6">
+                    <label for="idea-category" class="block text-sm font-medium text-gray-700 mb-1">
+                        Danh mục <span class="text-red-500">*</span>
+                    </label>
+                    <select id="idea-category" required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">-- Chọn danh mục --</option>
+                        <option value="Cơ sở vật chất">Cơ sở vật chất</option>
+                        <option value="Đào tạo">Đào tạo</option>
+                        <option value="Dịch vụ">Dịch vụ</option>
+                        <option value="Hoạt động">Hoạt động</option>
+                        <option value="Khác">Khác</option>
+                    </select>
+                </div>
+
+                <!-- Content Editor -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                        Nội dung chi tiết <span class="text-red-500">*</span>
+                    </label>
+                    <textarea id="idea-content"></textarea>
+                </div>
+
+                <!-- File Upload -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                        Hình ảnh/file minh họa (tùy chọn)
+                    </label>
+                    <div class="mt-1 flex items-center">
+                        <label for="idea-files" class="cursor-pointer bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-lg border border-gray-300 font-medium text-gray-700">
+                            <i class="fas fa-cloud-upload-alt mr-2"></i>Chọn file
+                        </label>
+                        <input id="idea-files" type="file" class="hidden" multiple accept="image/*,.pdf,.doc,.docx,.xls,.xlsx">
+                        <span id="file-names" class="ml-3 text-sm text-gray-500">Chưa chọn file</span>
+                    </div>
+                    <p class="mt-1 text-xs text-gray-500">
+                        Hỗ trợ: JPG, PNG (tối đa 5MB mỗi file), PDF, Word, Excel (tối đa 10MB mỗi file)
+                    </p>
+                </div>
+
+                <!-- Anonymous Option -->
+                <div class="mb-6">
+                    <div class="flex items-center">
+                        <input id="anonymous-checkbox" type="checkbox"
+                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                        <label for="anonymous-checkbox" class="ml-2 block text-sm text-gray-700">
+                            Gửi ẩn danh (ý tưởng sẽ không hiển thị tên của bạn)
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Preview and Submit Buttons -->
+                <div class="flex justify-end space-x-4">
+                    <button type="button" id="idea-preview" class="px-6 py-3 border border-gray-300 bg-white text-gray-700 rounded-lg font-medium hover:bg-gray-50">
+                        <i class="fas fa-eye mr-2"></i>Xem trước
+                    </button>
+                    <button type="submit" id="idea-submit" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700">
+                        <i class="fas fa-paper-plane mr-2"></i>Gửi ý tưởng
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Preview Modal -->
+        <div id="preview-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+            <div class="bg-white rounded-xl w-full max-w-4xl p-8" style="max-height: 90vh; overflow-y: auto;">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Xem trước ý tưởng</h2>
+                    <button id="close-preview-modal" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div id="preview-content" class="space-y-6">
+                    <!-- Preview content will be inserted here -->
+                </div>
+                <div class="flex justify-end mt-6">
+                    <button id="close-preview" class="px-6 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700">
+                        Đóng
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4">
+            <p class="text-center text-gray-400">
+                © 2023 DNU IdeaSpark. Bản quyền thuộc về Trường Đại học Đại Nam.
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script>
+        // Initialize editor
+        const editor = new EasyMDE({
+            element: document.getElementById('idea-content'),
+            placeholder: 'Mô tả chi tiết ý tưởng của bạn...',
+            spellChecker: false,
+            status: false,
+            toolbar: [
+                'bold', 'italic', 'heading', '|',
+                'quote', 'unordered-list', 'ordered-list', '|',
+                'link', 'image', '|',
+                'preview', 'guide'
+            ],
+            promptURLs: true
+        });
+
+        // Character counter for title
+        const titleInput = document.getElementById('idea-title');
+        const titleCounter = document.getElementById('title-count');
+        
+        titleInput.addEventListener('input', () => {
+            titleCounter.textContent = `${titleInput.value.length}/200 ký tự`;
+        });
+
+        // File upload display
+        const fileInput = document.getElementById('idea-files');
+        const fileNames = document.getElementById('file-names');
+        
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                const names = Array.from(fileInput.files).map(file => file.name).join(', ');
+                fileNames.textContent = `${fileInput.files.length} file đã chọn: ${names}`;
+            } else {
+                fileNames.textContent = 'Chưa chọn file';
+            }
+        });
+
+        // Form submission
+        const form = document.getElementById('submit-idea-form');
+        const notyf = new Notyf({
+            duration: 5000,
+            position: { x: 'right', y: 'top' }
+        });
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const title = document.getElementById('idea-title').value.trim();
+            const category = document.getElementById('idea-category').value;
+            const content = editor.value().trim();
+            const isAnonymous = document.getElementById('anonymous-checkbox').checked;
+            
+            if (!title || !category || !content) {
+                notyf.error('Vui lòng điền đầy đủ thông tin bắt buộc');
+                return;
+            }
+
+            // Show loading on submit button
+            const submitBtn = document.getElementById('idea-submit');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Đang gửi...';
+            submitBtn.disabled = true;
+            
+            // In real implementation, this would be an AJAX call to your backend
+            setTimeout(() => {
+                // Simulate successful submission
+                notyf.success('Ý tưởng đã được gửi thành công!');
+                
+                // Reset form
+                form.reset();
+                editor.value('');
+                fileNames.textContent = 'Chưa chọn file';
+                titleCounter.textContent = '0/200 ký tự';
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>Gửi ý tưởng';
+                submitBtn.disabled = false;
+            }, 1500);
+        });
+
+        // Preview modal
+        const previewBtn = document.getElementById('idea-preview');
+        const previewModal = document.getElementById('preview-modal');
+        const closePreviewBtn = document.getElementById('close-preview');
+        const closePreviewModalBtn = document.getElementById('close-preview-modal');
+        const previewContent = document.getElementById('preview-content');
+        
+        previewBtn.addEventListener('click', () => {
+            const title = document.getElementById('idea-title').value.trim();
+            const category = document.getElementById('idea-category').value;
+            const content = editor.value().trim();
+            
+            if (!title || !category || !content) {
+                notyf.error('Vui lòng điền đầy đủ thông tin để xem trước');
+                return;
+            }
+            
+            // Generate preview HTML
+            previewContent.innerHTML = `
+                <div class="bg-white p-6 rounded-lg">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium">${category}</span>
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">${title}</h3>
+                    <div class="prose max-w-none">
+                        ${marked.parse(content)}
+                    </div>
+                    ${fileInput.files.length > 0 ? `
+                    <div class="mt-6">
+                        <h4 class="text-sm font-medium text-gray-700 mb-2">File đính kèm:</h4>
+                        <div class="flex flex-wrap gap-2">
+                            ${Array.from(fileInput.files).map(file => `
+                                <div class="bg-gray-100 px-3 py-2 rounded-lg text-xs">${file.name}</div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    ` : ''}
+                    <div class="mt-6 pt-4 border-t border-gray-200 text-sm text-gray-500">
+                        ${document.getElementById('anonymous-checkbox').checked ? 
+                          '<i class="fas fa-user-secret mr-1"></i>Ý tưởng gửi ẩn danh' : 
+                          '<i class="fas fa-user mr-1"></i>Gửi với tư cách cá nhân'}
+                    </div>
+                </div>
+            `;
+            
+            previewModal.classList.remove('hidden');
+        });
+
+        closePreviewBtn.addEventListener('click', () => {
+            previewModal.classList.add('hidden');
+        });
+
+        closePreviewModalBtn.addEventListener('click', () => {
+            previewModal.classList.add('hidden');
+        });
+
+        previewModal.addEventListener('click', (e) => {
+            if (e.target === previewModal) {
+                previewModal.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
