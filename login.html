@@ -312,30 +312,43 @@
                 }
             });
         });
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const formParam = urlParams.get('form');
+        
         // Switch between login and register forms
         const loginTab = document.getElementById('login-tab');
         const registerTab = document.getElementById('register-tab');
         const loginForm = document.getElementById('login-form');
         const registerForm = document.getElementById('register-form');
         const switchToLogin = document.getElementById('switch-to-login');
-        loginTab.addEventListener('click', function() {
-            loginTab.classList.add('tab-active');
-            registerTab.classList.remove('tab-active');
-            loginForm.classList.remove('hidden');
-            registerForm.classList.add('hidden');
-        });
-        registerTab.addEventListener('click', function() {
+        
+        // Set initial form based on URL parameter
+        if (formParam === 'register') {
             registerTab.classList.add('tab-active');
             loginTab.classList.remove('tab-active');
             registerForm.classList.remove('hidden');
             loginForm.classList.add('hidden');
-        });
-        switchToLogin.addEventListener('click', function() {
+        }
+        function showLoginForm() {
             loginTab.classList.add('tab-active');
             registerTab.classList.remove('tab-active');
             loginForm.classList.remove('hidden');
             registerForm.classList.add('hidden');
-        });
+            history.pushState(null, null, window.location.pathname);
+        }
+        
+        function showRegisterForm() {
+            registerTab.classList.add('tab-active');
+            loginTab.classList.remove('tab-active');
+            registerForm.classList.remove('hidden');
+            loginForm.classList.add('hidden');
+            history.pushState(null, null, window.location.pathname + '?form=register');
+        }
+        
+        loginTab.addEventListener('click', showLoginForm);
+        registerTab.addEventListener('click', showRegisterForm);
+        switchToLogin.addEventListener('click', showLoginForm);
         // Password validation for register form
         const registerPassword = document.getElementById('register-password');
         const confirmPassword = document.getElementById('confirm-password');
