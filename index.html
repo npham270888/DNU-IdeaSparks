@@ -488,12 +488,12 @@
         const closeLoginModal = document.getElementById('close-login-modal');
 
         loginBtn.addEventListener('click', () => {
-            loginModal.classList.remove('hidden');
+            window.location.href = "/FindIt-DNU/login.html";
         });
 
         registerBtn.addEventListener('click', () => {
             // In a real implementation, this would redirect to register page
-            alert('Chuyển hướng đến trang đăng ký');
+            window.location.href = "/FindIt-DNU/login.html?form=register";
         });
 
         closeLoginModal.addEventListener('click', () => {
