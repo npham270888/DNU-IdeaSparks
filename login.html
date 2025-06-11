@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRƯỜNG ĐẠI HỌC ĐẠI NAM - DNU IdeaSpark</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="https://sso.dainam.edu.vn/logo.png">
+    <style>
+        :root {
+            --theme-default: #f37423;
+            --theme-secondary: #eeb82f;
+            --primary-color: #1949a9;
+            --ideaspark-blue: #f37423;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #6b7280;
+            z-index: 10;
+        }
+        .password-input-container {
+            position: relative;
+        }
+        .password-input-container .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+        }
+        .password-input-container input {
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+        .auth-card {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .auth-card:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        .social-login img {
+            transition: transform 0.3s ease;
+        }
+        .social-login:hover img {
+            transform: scale(1.1);
+        }
+        .tab-active {
+            border-bottom: 3px solid var(--ideaspark-blue);
+            color: var(--ideaspark-blue);
+            font-weight: 600;
+        }
+        .btn-primary {
+            background-color: var(--ideaspark-blue);
+        }
+        .btn-primary:hover {
+            background-color: #1649c2;
+        }
+        .btn-secondary {
+            background-color: var(--theme-secondary);
+        }
+        .btn-secondary:hover {
+            background-color: #e6ac1f;
+        }
+        .bg-primary {
+            background-color: var(--primary-color);
+        }
+        .text-primary {
+            color: var(--primary-color);
+        }
+        .border-primary {
+            border-color: var(--primary-color);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--ideaspark-blue) 100%);
+        }
+        .input-focus:focus {
+            border-color: var(--ideaspark-blue);
+            box-shadow: 0 0 0 2px rgba(26, 86, 219, 0.2);
+        }
+        .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(26, 86, 219, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(26, 86, 219, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(26, 86, 219, 0);
+            }
+        }
+        .ideaspark-header {
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--ideaspark-blue) 100%);
+        }
+        .ideaspark-logo {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-4xl bg-white rounded-xl overflow-hidden auth-card">
+        <div class="md:flex">
+            <!-- Left Side - University Info -->
+            <div class="hidden md:block md:w-1/2 gradient-bg p-10 text-white">
+                <div class="flex flex-col h-full justify-between">
+                    <div>
+                        <div class="flex items-center mb-6">
+                            <div class="ideaspark-logo p-2 mr-4">
+                                <img src="https://sso.dainam.edu.vn/logo.png" alt="Đại Nam University Logo" class="w-14 h-14">
+                            </div>
+                            <div>
+                                <h1 class="text-2xl font-bold">TRƯỜNG ĐẠI HỌC<br>ĐẠI NAM</h1>
+                                <p class="text-blue-100 text-sm mt-1">DNU IdeaSpark</p>
+                            </div>
+                        </div>
+                        <p class="text-blue-100 mb-8">Nền tảng Góp ý và Cải tiến DNU - Nơi mọi ý tưởng đều được trân trọng</p>
+                    </div>
+                    <div class="mt-auto">
+                        <div class="flex items-center space-x-4 mb-6">
+                            <div class="bg-white bg-opacity-20 p-3 rounded-full animate-pulse">
+                                <i class="fas fa-lightbulb text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold">Ý tưởng đổi mới</h3>
+                                <p class="text-blue-100 text-sm">Đóng góp ý tưởng cải tiến nhà trường</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="bg-white bg-opacity-20 p-3 rounded-full">
+                                <i class="fas fa-comments text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold">Phản hồi nhanh</h3>
+                                <p class="text-blue-100 text-sm">Tương tác trực tiếp với ban lãnh đạo</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Side - Auth Forms -->
+            <div class="w-full md:w-1/2 p-8 md:p-10">
+                <!-- Header with IdeaSpark branding -->
+                <div class="ideaspark-header text-white py-3 px-6 rounded-lg mb-6 text-center">
+                    <h2 class="text-xl font-bold">DNU IdeaSpark</h2>
+                    <p class="text-blue-100 text-sm">Nền tảng Góp ý và Cải tiến DNU</p>
+                </div>
+                
+                <!-- Tabs -->
+                <div class="flex border-b mb-8">
+                    <button id="login-tab" class="tab-active py-2 px-4 mr-4 focus:outline-none">Đăng nhập</button>
+                    <button id="register-tab" class="py-2 px-4 focus:outline-none">Đăng ký</button>
+                </div>
+                
+                <!-- Login Form -->
+                <div id="login-form" class="space-y-6">
+                    <div class="text-center">
+                        <h2 class="text-2xl font-bold text-gray-800">Đăng nhập DNU IdeaSpark</h2>
+                        <p class="text-gray-600">Vui lòng nhập thông tin đăng nhập</p>
+                    </div>
+                    
+                    <form class="space-y-4">
+                        <div>
+                            <label for="login-username" class="block text-sm font-medium text-gray-700 mb-1">Tên đăng nhập</label>
+                            <div class="relative">
+                                <input type="text" id="login-username" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 input-focus pl-10" placeholder="Nhập tên đăng nhập" required>
+                                <i class="fas fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="login-password" class="block text-sm font-medium text-gray-700 mb-1">Mật khẩu</label>
+                            <div class="password-input-container">
+                                <input type="password" id="login-password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 input-focus" placeholder="Nhập mật khẩu" required>
+                                <i class="fas fa-lock input-icon"></i>
+                                <span toggle="#login-password" class="toggle-password"><i class="fas fa-eye-slash"></i></span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <input id="remember-me" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                                <label for="remember-me" class="ml-2 block text-sm text-gray-700">Ghi nhớ đăng nhập</label>
+                            </div>
+                            <a href="https://sso.dainam.edu.vn/Account/ForgotPassword" class="text-sm text-blue-600 hover:text-blue-800">Quên mật khẩu?</a>
+                        </div>
+                        
+                        <button type="submit" class="w-full btn-primary text-white py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 font-medium">
+                            Đăng nhập
+                        </button>
+                    </form>
+                    
+                </div>
+                
+                <!-- Register Form (Hidden by default) -->
+                <div id="register-form" class="space-y-6 hidden">
+                    <div class="text-center">
+                        <h2 class="text-2xl font-bold text-gray-800">Đăng ký DNU IdeaSpark</h2>
+                        <p class="text-gray-600">Tạo tài khoản mới để đóng góp ý tưởng</p>
+                    </div>
+                    
+                    <form class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="first-name" class="block text-sm font-medium text-gray-700 mb-1">Họ</label>
+                                <input type="text" id="first-name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 input-focus" placeholder="Nhập họ" required>
+                            </div>
+                            <div>
+                                <label for="last-name" class="block text-sm font-medium text-gray-700 mb-1">Tên</label>
+                                <input type="text" id="last-name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 input-focus" placeholder="Nhập tên" required>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="register-email" class="block text-sm font-medium text-gray-700 mb-1">Email DNU</label>
+                            <div class="relative">
+                                <input type="email" id="register-email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 input-focus pl-10" placeholder="Nhập email @dainam.edu.vn" required>
+                                <i class="fas fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="register-username" class="block text-sm font-medium text-gray-700 mb-1">Tên đăng nhập</label>
+                            <div class="relative">
+                                <input type="text" id="register-username" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 input-focus pl-10" placeholder="Tạo tên đăng nhập" required>
+                                <i class="fas fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="register-password" class="block text-sm font-medium text-gray-700 mb-1">Mật khẩu</label>
+                            <div class="password-input-container">
+                                <input type="password" id="register-password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 input-focus" placeholder="Tạo mật khẩu" required>
+                                <i class="fas fa-lock input-icon"></i>
+                                <span toggle="#register-password" class="toggle-password"><i class="fas fa-eye-slash"></i></span>
+                            </div>
+                            <div class="mt-2">
+                                <div class="flex items-center mb-1">
+                                    <div id="length-check" class="w-4 h-4 rounded-full border border-gray-300 mr-2"></div>
+                                    <span class="text-xs text-gray-500">Ít nhất 8 ký tự</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div id="complexity-check" class="w-4 h-4 rounded-full border border-gray-300 mr-2"></div>
+                                    <span class="text-xs text-gray-500">Chứa chữ và số</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="confirm-password" class="block text-sm font-medium text-gray-700 mb-1">Xác nhận mật khẩu</label>
+                            <div class="password-input-container">
+                                <input type="password" id="confirm-password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 input-focus" placeholder="Nhập lại mật khẩu" required>
+                                <i class="fas fa-lock input-icon"></i>
+                                <span toggle="#confirm-password" class="toggle-password"><i class="fas fa-eye-slash"></i></span>
+                            </div>
+                            <div id="match-check" class="mt-1 text-xs text-gray-500 hidden">
+                                <i class="fas fa-check-circle text-green-500 mr-1"></i> Mật khẩu khớp
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                                <input id="agree-terms" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" required>
+                            </div>
+                            <div class="ml-3 text-sm">
+                                <label for="agree-terms" class="text-gray-700">
+                                    Tôi đồng ý với <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">Điều khoản sử dụng</a> và <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">Chính sách bảo mật</a>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="w-full btn-primary text-white py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 font-medium">
+                            Đăng ký
+                        </button>
+                    </form>
+                    
+                    <div class="text-center text-sm text-gray-600">
+                        Đã có tài khoản? <button id="switch-to-login" class="text-blue-600 hover:text-blue-800 font-medium">Đăng nhập ngay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle password visibility
+        document.querySelectorAll('.toggle-password').forEach(function(element) {
+            element.addEventListener('click', function() {
+                const target = this.getAttribute('toggle');
+                const input = document.querySelector(target);
+                const icon = this.querySelector('i');
+                
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                } else {
+                    input.type = 'password';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                }
+            });
+        });
+        // Switch between login and register forms
+        const loginTab = document.getElementById('login-tab');
+        const registerTab = document.getElementById('register-tab');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const switchToLogin = document.getElementById('switch-to-login');
+        loginTab.addEventListener('click', function() {
+            loginTab.classList.add('tab-active');
+            registerTab.classList.remove('tab-active');
+            loginForm.classList.remove('hidden');
+            registerForm.classList.add('hidden');
+        });
+        registerTab.addEventListener('click', function() {
+            registerTab.classList.add('tab-active');
+            loginTab.classList.remove('tab-active');
+            registerForm.classList.remove('hidden');
+            loginForm.classList.add('hidden');
+        });
+        switchToLogin.addEventListener('click', function() {
+            loginTab.classList.add('tab-active');
+            registerTab.classList.remove('tab-active');
+            loginForm.classList.remove('hidden');
+            registerForm.classList.add('hidden');
+        });
+        // Password validation for register form
+        const registerPassword = document.getElementById('register-password');
+        const confirmPassword = document.getElementById('confirm-password');
+        const lengthCheck = document.getElementById('length-check');
+        const complexityCheck = document.getElementById('complexity-check');
+        const matchCheck = document.getElementById('match-check');
+        registerPassword.addEventListener('input', function() {
+            // Check password length
+            if (this.value.length >= 8) {
+                lengthCheck.classList.remove('border-gray-300');
+                lengthCheck.classList.add('bg-green-500', 'border-green-500');
+            } else {
+                lengthCheck.classList.remove('bg-green-500', 'border-green-500');
+                lengthCheck.classList.add('border-gray-300');
+            }
+            
+            // Check password complexity (at least one letter and one number)
+            if (/\d/.test(this.value) && /[a-zA-Z]/.test(this.value)) {
+                complexityCheck.classList.remove('border-gray-300');
+                complexityCheck.classList.add('bg-green-500', 'border-green-500');
+            } else {
+                complexityCheck.classList.remove('bg-green-500', 'border-green-500');
+                complexityCheck.classList.add('border-gray-300');
+            }
+            
+            // Check if passwords match
+            checkPasswordMatch();
+        });
+        confirmPassword.addEventListener('input', checkPasswordMatch);
+        function checkPasswordMatch() {
+            if (registerPassword.value && confirmPassword.value && registerPassword.value === confirmPassword.value) {
+                matchCheck.classList.remove('hidden');
+            } else {
+                matchCheck.classList.add('hidden');
+            }
+        }
+        // Form submission handling
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                // In a real implementation, you would handle form submission here
+                alert('Form submitted! (This is a demo)');
+            });
+        });
+    </script>
+<p style="border-radius: 8px; text-align: center; font-size: 12px; color: #fff; margin-top: 16px;position: fixed; left: 8px; bottom: 8px; z-index: 10; background: rgba(0, 0, 0, 0.8); padding: 4px 8px;">Made with <img src="https://enzostvs-deepsite.hf.space/logo.svg" alt="DeepSite Logo" style="width: 16px; height: 16px; vertical-align: middle;display:inline-block;margin-right:3px;filter:brightness(0) invert(1);"><a href="https://enzostvs-deepsite.hf.space" style="color: #fff;text-decoration: underline;" target="_blank" >DeepSite</a> - 🧬 <a href="https://enzostvs-deepsite.hf.space?remix=npham27102005/dnu-ideaspark-login" style="color: #fff;text-decoration: underline;" target="_blank" >Remix</a></p></body>
+</html>
