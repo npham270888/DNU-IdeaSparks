@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BangHouse's - Đồ Uống Chất Lượng Cao</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .product-card {
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .category-tab {
+            transition: all 0.3s ease;
+        }
+        
+        .category-tab.active {
+            background-color: #4f46e5;
+            color: white;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #10b981;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            display: none;
+            z-index: 1000;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #4f46e5;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .form-input {
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+        }
+        
+        .step-indicator {
+            transition: all 0.3s ease;
+        }
+        
+        .step-indicator.active {
+            background-color: #4f46e5;
+            color: white;
+        }
+        
+        .step-indicator.completed {
+            background-color: #10b981;
+            color: white;
+        }
+        
+        .profile-tab {
+            transition: all 0.3s ease;
+        }
+        
+        .profile-tab.active {
+            background-color: #4f46e5;
+            color: white;
+        }
+        
+        .order-card {
+            transition: all 0.3s ease;
+        }
+        
+        .order-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+        }
+        
+        .status-pending {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        
+        .status-processing {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .status-completed {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status-cancelled {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-indigo-600 cursor-pointer" onclick="showPage('home')">BangHouse's</h1>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" onclick="showPage('home')" class="nav-link text-gray-700 hover:text-indigo-600 transition">Trang chủ</a>
+                    <a href="#" onclick="showPage('about')" class="nav-link text-gray-700 hover:text-indigo-600 transition">Giới thiệu</a>
+                    <a href="#" onclick="showPage('menu')" class="nav-link text-gray-700 hover:text-indigo-600 transition">Thực đơn</a>
+                    <a href="#" onclick="showPage('contact')" class="nav-link text-gray-700 hover:text-indigo-600 transition">Liên hệ</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button id="cartBtn" class="text-gray-700 hover:text-indigo-600 transition">
+                            <i class="fas fa-shopping-cart text-xl"></i>
+                            <span id="cartCount" class="cart-badge">0</span>
+                        </button>
+                    </div>
+                    <button id="userBtn" onclick="showPage('login')" class="text-gray-700 hover:text-indigo-600 transition">
+                        <i class="fas fa-user text-xl"></i>
+                    </button>
+                    <button id="profileBtn" onclick="showPage('profile')" class="hidden text-gray-700 hover:text-indigo-600 transition">
+                        <i class="fas fa-user-circle text-xl"></i>
+                    </button>
+                    <button id="logoutBtn" onclick="logout()" class="hidden text-gray-700 hover:text-indigo-600 transition">
+                        <i class="fas fa-sign-out-alt text-xl"></i>
+                    </button>
+                    <button id="mobileMenuBtn" class="md:hidden text-gray-700">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t">
+            <div class="container mx-auto px-4 py-4">
+                <a href="#" onclick="showPage('home')" class="block py-2 text-gray-700 hover:text-indigo-600">Trang chủ</a>
+                <a href="#" onclick="showPage('about')" class="block py-2 text-gray-700 hover:text-indigo-600">Giới thiệu</a>
+                <a href="#" onclick="showPage('menu')" class="block py-2 text-gray-700 hover:text-indigo-600">Thực đơn</a>
+                <a href="#" onclick="showPage('contact')" class="block py-2 text-gray-700 hover:text-indigo-600">Liên hệ</a>
+                <a href="#" id="mobileProfileLink" onclick="showPage('profile')" class="hidden block py-2 text-gray-700 hover:text-indigo-600">Hồ sơ của tôi</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Home Page -->
+    <div id="homePage" class="page active">
+        <!-- Hero Section -->
+        <section class="hero-section text-white py-20">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 fade-in">Chào mừng đến với BangHouse's</h2>
+                <p class="text-xl mb-8 max-w-2xl mx-auto fade-in">Nơi thưởng thức những ly đồ uống chất lượng cao với hương vị độc đáo và không gian ấm cúng</p>
+                <button onclick="showPage('menu')" class="bg-white text-indigo-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition fade-in">
+                    Xem Thực Đơn
+                </button>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Tại sao chọn BangHouse's?</h2>
+                <div class="grid md:grid-cols-4 gap-8">
+                    <div class="text-center">
+                        <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-coffee text-indigo-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Chất lượng hàng đầu</h3>
+                        <p class="text-gray-600">Nguyên liệu được tuyển chọn kỹ lưỡng từ những nguồn cung cấp uy tín</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-users text-indigo-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Đội ngũ chuyên nghiệp</h3>
+                        <p class="text-gray-600">Barista được đào tạo bài bản với nhiều năm kinh nghiệm</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-heart text-indigo-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Đam mê và sáng tạo</h3>
+                        <p class="text-gray-600">Luôn cập nhật những xu hướng mới và sáng tạo công thức độc đáo</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-smile text-indigo-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Dịch vụ tận tâm</h3>
+                        <p class="text-gray-600">Luôn đặt sự hài lòng của khách hàng lên hàng đầu</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Popular Products -->
+        <section class="py-16 bg-gray-100">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Sản phẩm nổi bật</h2>
+                <div id="popularProducts" class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <!-- Popular products will be loaded here -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- About Page -->
+    <div id="aboutPage" class="page">
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Về BangHouse's</h2>
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <img src="https://picsum.photos/seed/coffeeshop/600/400.jpg" alt="BangHouse's" class="rounded-lg shadow-lg">
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-4 text-indigo-600">Câu chuyện của chúng tôi</h3>
+                        <p class="text-gray-600 mb-4">
+                            BangHouse's ra đời từ niềm đam mê với cà phê và mong muốn tạo ra một không gian nơi mọi người có thể tìm thấy sự thư giãn và kết nối. Chúng tôi tin rằng mỗi ly đồ uống không chỉ là một thức uống, mà còn là một trải nghiệm.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            Với đội ngũ barista chuyên nghiệp và nguồn nguyên liệu được lựa chọn kỹ lưỡng, chúng tôi cam kết mang đến cho bạn những sản phẩm chất lượng nhất, từ hạt cà phê rang xay tại chỗ đến những loại trà được tuyển chọn từ những vùng trồng trà nổi tiếng.
+                        </p>
+                        <p class="text-gray-600 mb-6">
+                            Không gian của BangHouse's được thiết kế để tạo cảm giác ấm cúng, thân thiện, là nơi lý tưởng để gặp gỡ bạn bè, làm việc hoặc đơn giản là tận hưởng một khoảnh khắc riêng tư với ly đồ uống yêu thích.
+                        </p>
+                        <div class="grid grid-cols-3 gap-4 text-center">
+                            <div>
+                                <div class="text-3xl font-bold text-indigo-600">50+</div>
+                                <div class="text-gray-600">Loại đồ uống</div>
+                            </div>
+                            <div>
+                                <div class="text-3xl font-bold text-indigo-600">10+</div>
+                                <div class="text-gray-600">Năm kinh nghiệm</div>
+                            </div>
+                            <div>
+                                <div class="text-3xl font-bold text-indigo-600">1000+</div>
+                                <div class="text-gray-600">Khách hàng</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Menu Page -->
+    <div id="menuPage" class="page">
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Thực Đơn</h2>
+                
+                <!-- Category Tabs -->
+                <div class="flex flex-wrap justify-center mb-8">
+                    <button class="category-tab active px-6 py-2 rounded-full m-2" data-category="all">Tất Cả</button>
+                    <button class="category-tab px-6 py-2 rounded-full m-2 bg-gray-200" data-category="coffee">Cà Phê</button>
+                    <button class="category-tab px-6 py-2 rounded-full m-2 bg-gray-200" data-category="americano">A-Mê</button>
+                    <button class="category-tab px-6 py-2 rounded-full m-2 bg-gray-200" data-category="tea">Trà Trái Cây</button>
+                    <button class="category-tab px-6 py-2 rounded-full m-2 bg-gray-200" data-category="milktea">Trà Sữa</button>
+                    <button class="category-tab px-6 py-2 rounded-full m-2 bg-gray-200" data-category="matcha">Matcha</button>
+                    <button class="category-tab px-6 py-2 rounded-full m-2 bg-gray-200" data-category="chocolate">Chocolate</button>
+                    <button class="category-tab px-6 py-2 rounded-full m-2 bg-gray-200" data-category="frappe">Frappe</button>
+                    <button class="category-tab px-6 py-2 rounded-full m-2 bg-gray-200" data-category="food">Bánh & Snack</button>
+                </div>
+                
+                <!-- Products Grid -->
+                <div id="productsContainer" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <!-- Products will be loaded here by JavaScript -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contactPage" class="page">
+        <section class="py-16 bg-gray-100">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Liên Hệ</h2>
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-6 text-indigo-600">Thông tin liên hệ</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-map-marker-alt text-indigo-600 mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-semibold">Địa chỉ</h4>
+                                    <p class="text-gray-600">123 Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-phone text-indigo-600 mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-semibold">Điện thoại</h4>
+                                    <p class="text-gray-600">(028) 1234 5678</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-envelope text-indigo-600 mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-semibold">Email</h4>
+                                    <p class="text-gray-600">info@banghouse.vn</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-clock text-indigo-600 mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-semibold">Giờ mở cửa</h4>
+                                    <p class="text-gray-600">Thứ 2 - Chủ Nhật: 7:00 - 22:00</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-6">
+                            <h4 class="font-semibold mb-3">Theo dõi chúng tôi</h4>
+                            <div class="flex space-x-4">
+                                <a href="#" class="text-indigo-600 hover:text-indigo-800 transition">
+                                    <i class="fab fa-facebook text-xl"></i>
+                                </a>
+                                <a href="#" class="text-indigo-600 hover:text-indigo-800 transition">
+                                    <i class="fab fa-instagram text-xl"></i>
+                                </a>
+                                <a href="#" class="text-indigo-600 hover:text-indigo-800 transition">
+                                    <i class="fab fa-twitter text-xl"></i>
+                                </a>
+                                <a href="#" class="text-indigo-600 hover:text-indigo-800 transition">
+                                    <i class="fab fa-youtube text-xl"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-6 text-indigo-600">Gửi tin nhắn cho chúng tôi</h3>
+                        <form id="contactForm" class="space-y-4">
+                            <div>
+                                <label for="name" class="block text-gray-700 mb-2">Họ và tên</label>
+                                <input type="text" id="name" name="name" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                            </div>
+                            <div>
+                                <label for="email" class="block text-gray-700 mb-2">Email</label>
+                                <input type="email" id="email" name="email" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                            </div>
+                            <div>
+                                <label for="message" class="block text-gray-700 mb-2">Tin nhắn</label>
+                                <textarea id="message" name="message" rows="4" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required></textarea>
+                            </div>
+                            <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                                Gửi tin nhắn
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Login/Register Page -->
+    <div id="loginPage" class="page">
+        <section class="min-h-screen flex items-center justify-center bg-gray-100 py-12">
+            <div class="container mx-auto px-4">
+                <div class="max-w-md mx-auto bg-white rounded-lg shadow-lg p-8">
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl font-bold text-indigo-600">BangHouse's</h2>
+                        <p class="text-gray-600 mt-2">Đăng nhập để đặt hàng</p>
+                    </div>
+                    
+                    <!-- Login Form -->
+                    <div id="loginForm" class="space-y-4">
+                        <div>
+                            <label for="loginEmail" class="block text-gray-700 mb-2">Email</label>
+                            <input type="email" id="loginEmail" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                        </div>
+                        <div>
+                            <label for="loginPassword" class="block text-gray-700 mb-2">Mật khẩu</label>
+                            <input type="password" id="loginPassword" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="mr-2">
+                                <span class="text-sm text-gray-600">Ghi nhớ đăng nhập</span>
+                            </label>
+                            <a href="#" class="text-sm text-indigo-600 hover:text-indigo-800">Quên mật khẩu?</a>
+                        </div>
+                        <button onclick="login()" class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition">
+                            Đăng nhập
+                        </button>
+                        <div class="text-center">
+                            <span class="text-gray-600">Chưa có tài khoản? </span>
+                            <a href="#" onclick="showRegisterForm()" class="text-indigo-600 hover:text-indigo-800">Đăng ký ngay</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Register Form -->
+                    <div id="registerForm" class="space-y-4 hidden">
+                        <div>
+                            <label for="registerName" class="block text-gray-700 mb-2">Họ và tên</label>
+                            <input type="text" id="registerName" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                        </div>
+                        <div>
+                            <label for="registerEmail" class="block text-gray-700 mb-2">Email</label>
+                            <input type="email" id="registerEmail" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                        </div>
+                        <div>
+                            <label for="registerPhone" class="block text-gray-700 mb-2">Số điện thoại</label>
+                            <input type="tel" id="registerPhone" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                        </div>
+                        <div>
+                            <label for="registerPassword" class="block text-gray-700 mb-2">Mật khẩu</label>
+                            <input type="password" id="registerPassword" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                        </div>
+                        <div>
+                            <label for="confirmPassword" class="block text-gray-700 mb-2">Xác nhận mật khẩu</label>
+                            <input type="password" id="confirmPassword" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                        </div>
+                        <button onclick="register()" class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition">
+                            Đăng ký
+                        </button>
+                        <div class="text-center">
+                            <span class="text-gray-600">Đã có tài khoản? </span>
+                            <a href="#" onclick="showLoginForm()" class="text-indigo-600 hover:text-indigo-800">Đăng nhập</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Profile Page -->
+    <div id="profilePage" class="page">
+        <section class="py-16 bg-gray-100">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Hồ sơ của tôi</h2>
+                
+                <div class="grid md:grid-cols-4 gap-8">
+                    <!-- Profile Sidebar -->
+                    <div class="md:col-span-1">
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <div class="text-center mb-6">
+                                <div class="w-24 h-24 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-user text-indigo-600 text-4xl"></i>
+                                </div>
+                                <h3 id="profileName" class="text-xl font-semibold">Tên người dùng</h3>
+                                <p id="profileEmail" class="text-gray-600">email@example.com</p>
+                            </div>
+                            
+                            <div class="space-y-2">
+                                <button class="profile-tab active w-full text-left px-4 py-2 rounded-lg" onclick="showProfileTab('info')">
+                                    <i class="fas fa-user mr-2"></i> Thông tin cá nhân
+                                </button>
+                                <button class="profile-tab w-full text-left px-4 py-2 rounded-lg bg-gray-100" onclick="showProfileTab('orders')">
+                                    <i class="fas fa-shopping-bag mr-2"></i> Lịch sử đơn hàng
+                                </button>
+                                <button class="profile-tab w-full text-left px-4 py-2 rounded-lg bg-gray-100" onclick="showProfileTab('password')">
+                                    <i class="fas fa-lock mr-2"></i> Đổi mật khẩu
+                                </button>
+                                <button class="profile-tab w-full text-left px-4 py-2 rounded-lg bg-gray-100" onclick="showProfileTab('addresses')">
+                                    <i class="fas fa-map-marker-alt mr-2"></i> Địa chỉ giao hàng
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Profile Content -->
+                    <div class="md:col-span-3">
+                        <!-- Personal Info Tab -->
+                        <div id="infoTab" class="profile-tab-content bg-white rounded-lg shadow-md p-6">
+                            <h3 class="text-xl font-semibold mb-6">Thông tin cá nhân</h3>
+                            <form id="profileInfoForm" class="space-y-4">
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="profileInfoName" class="block text-gray-700 mb-2">Họ và tên</label>
+                                        <input type="text" id="profileInfoName" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                    </div>
+                                    <div>
+                                        <label for="profileInfoPhone" class="block text-gray-700 mb-2">Số điện thoại</label>
+                                        <input type="tel" id="profileInfoPhone" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="profileInfoEmail" class="block text-gray-700 mb-2">Email</label>
+                                    <input type="email" id="profileInfoEmail" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                </div>
+                                <div>
+                                    <label for="profileInfoBirthday" class="block text-gray-700 mb-2">Ngày sinh</label>
+                                    <input type="date" id="profileInfoBirthday" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                </div>
+                                <div>
+                                    <label for="profileInfoGender" class="block text-gray-700 mb-2">Giới tính</label>
+                                    <select id="profileInfoGender" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                        <option value="">Chọn giới tính</option>
+                                        <option value="male">Nam</option>
+                                        <option value="female">Nữ</option>
+                                        <option value="other">Khác</option>
+                                    </select>
+                                </div>
+                                <button type="button" onclick="updateProfileInfo()" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                                    Cập nhật thông tin
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <!-- Orders History Tab -->
+                        <div id="ordersTab" class="profile-tab-content bg-white rounded-lg shadow-md p-6 hidden">
+                            <h3 class="text-xl font-semibold mb-6">Lịch sử đơn hàng</h3>
+                            <div id="ordersList" class="space-y-4">
+                                <!-- Orders will be loaded here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Change Password Tab -->
+                        <div id="passwordTab" class="profile-tab-content bg-white rounded-lg shadow-md p-6 hidden">
+                            <h3 class="text-xl font-semibold mb-6">Đổi mật khẩu</h3>
+                            <form id="changePasswordForm" class="space-y-4">
+                                <div>
+                                    <label for="currentPassword" class="block text-gray-700 mb-2">Mật khẩu hiện tại</label>
+                                    <input type="password" id="currentPassword" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                </div>
+                                <div>
+                                    <label for="newPassword" class="block text-gray-700 mb-2">Mật khẩu mới</label>
+                                    <input type="password" id="newPassword" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                </div>
+                                <div>
+                                    <label for="confirmNewPassword" class="block text-gray-700 mb-2">Xác nhận mật khẩu mới</label>
+                                    <input type="password" id="confirmNewPassword" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                </div>
+                                <button type="button" onclick="changePassword()" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                                    Đổi mật khẩu
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <!-- Addresses Tab -->
+                        <div id="addressesTab" class="profile-tab-content bg-white rounded-lg shadow-md p-6 hidden">
+                            <h3 class="text-xl font-semibold mb-6">Địa chỉ giao hàng</h3>
+                            <div id="addressesList" class="space-y-4 mb-6">
+                                <!-- Addresses will be loaded here -->
+                            </div>
+                            <button onclick="showAddAddressForm()" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                                <i class="fas fa-plus mr-2"></i> Thêm địa chỉ mới
+                            </button>
+                            
+                            <!-- Add Address Form -->
+                            <div id="addAddressForm" class="hidden mt-6 p-4 border rounded-lg">
+                                <h4 class="font-semibold mb-4">Thêm địa chỉ mới</h4>
+                                <form id="newAddressForm" class="space-y-4">
+                                    <div>
+                                        <label for="addressName" class="block text-gray-700 mb-2">Tên người nhận</label>
+                                        <input type="text" id="addressName" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                    </div>
+                                    <div>
+                                        <label for="addressPhone" class="block text-gray-700 mb-2">Số điện thoại</label>
+                                        <input type="tel" id="addressPhone" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                    </div>
+                                    <div>
+                                        <label for="addressDetail" class="block text-gray-700 mb-2">Địa chỉ chi tiết</label>
+                                        <input type="text" id="addressDetail" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <button type="button" onclick="addAddress()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
+                                            Lưu địa chỉ
+                                        </button>
+                                        <button type="button" onclick="hideAddAddressForm()" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition">
+                                            Hủy
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Checkout Page -->
+    <div id="checkoutPage" class="page">
+        <section class="py-16 bg-gray-100">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Thanh toán</h2>
+                
+                <!-- Steps -->
+                <div class="flex justify-center mb-8">
+                    <div class="flex items-center space-x-4">
+                        <div class="step-indicator active px-4 py-2 rounded-full">1. Giỏ hàng</div>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                        <div class="step-indicator px-4 py-2 rounded-full bg-gray-200">2. Thông tin</div>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                        <div class="step-indicator px-4 py-2 rounded-full bg-gray-200">3. Thanh toán</div>
+                    </div>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Cart Items -->
+                    <div class="md:col-span-2">
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <h3 class="text-xl font-semibold mb-4">Giỏ hàng của bạn</h3>
+                            <div id="checkoutItems" class="space-y-4">
+                                <!-- Cart items will be loaded here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Delivery Info -->
+                        <div class="bg-white rounded-lg shadow-md p-6 mt-6">
+                            <h3 class="text-xl font-semibold mb-4">Thông tin giao hàng</h3>
+                            <form id="deliveryForm" class="space-y-4">
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-gray-700 mb-2">Họ và tên</label>
+                                        <input type="text" id="deliveryName" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-700 mb-2">Số điện thoại</label>
+                                        <input type="tel" id="deliveryPhone" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 mb-2">Địa chỉ giao hàng</label>
+                                    <input type="text" id="deliveryAddress" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 mb-2">Ghi chú (tùy chọn)</label>
+                                    <textarea id="deliveryNote" rows="3" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- Order Summary -->
+                    <div>
+                        <div class="bg-white rounded-lg shadow-md p-6 sticky top-24">
+                            <h3 class="text-xl font-semibold mb-4">Tóm tắt đơn hàng</h3>
+                            <div class="space-y-2 mb-4">
+                                <div class="flex justify-between">
+                                    <span>Tạm tính:</span>
+                                    <span id="subtotal">0 đ</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Phí giao hàng:</span>
+                                    <span>15.000 đ</span>
+                                </div>
+                                <div class="border-t pt-2">
+                                    <div class="flex justify-between font-semibold">
+                                        <span>Tổng cộng:</span>
+                                        <span id="totalAmount">0 đ</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <h4 class="font-semibold mb-2">Phương thức thanh toán</h4>
+                                <div class="space-y-2">
+                                    <label class="flex items-center">
+                                        <input type="radio" name="payment" value="cod" checked class="mr-2">
+                                        <span>Thanh toán khi nhận hàng (COD)</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="radio" name="payment" value="card" class="mr-2">
+                                        <span>Thẻ tín dụng/Ghi nợ</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="radio" name="payment" value="bank" class="mr-2">
+                                        <span>Chuyển khoản ngân hàng</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <button onclick="placeOrder()" class="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition">
+                                Đặt hàng
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md max-h-[80vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-semibold">Giỏ hàng của bạn</h3>
+                <button id="closeCartBtn" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="cartItems" class="space-y-4 mb-4">
+                <!-- Cart items will be loaded here -->
+            </div>
+            <div class="border-t pt-4">
+                <div class="flex justify-between mb-4">
+                    <span class="font-semibold">Tổng cộng:</span>
+                    <span id="cartTotal" class="font-semibold">0 đ</span>
+                </div>
+                <button onclick="showPage('checkout')" class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition mb-2">
+                    Thanh toán
+                </button>
+                <button onclick="showPage('menu')" class="w-full bg-gray-200 text-gray-700 py-2 rounded-lg hover:bg-gray-300 transition">
+                    Tiếp tục mua sắm
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-xl font-bold">BangHouse's</h3>
+                    <p class="text-gray-400">© 2023 BangHouse's. All rights reserved.</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition">Chính sách bảo mật</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">Điều khoản sử dụng</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">FAQ</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <span id="toastMessage">Sản phẩm đã được thêm vào giỏ hàng!</span>
+    </div>
+
+    <script>
+        // Product data
+        const products = {
+            coffee: [
+                { id: 1, name: "Espresso Nóng", price: 45000, image: "//cdn.hstatic.net/products/1000075078/espresso_shot_ce837696dded42d4a3135d9302b68f31_large.png" },
+                { id: 2, name: "Espresso Đá", price: 49000, image: "//cdn.hstatic.net/products/1000075078/espresso_da_589e3a4d46e94f72b26752ee64b93e7b_large.png" },
+                { id: 3, name: "Americano Nóng", price: 45000, image: "//cdn.hstatic.net/products/1000075078/americano_nong_785ea48734b741858eaae04501a36fa5_large.png" },
+                { id: 4, name: "Latte Nóng", price: 59000, image: "//cdn.hstatic.net/products/1000075078/latte_nong_77d6c8dd1ce84d0f900f83d99f069557_large.png" },
+                { id: 5, name: "Cappuccino Đá", price: 55000, image: "//cdn.hstatic.net/products/1000075078/cappucino_da_691da3dddf5744d698974dd6596677bc_large.png" },
+                { id: 6, name: "Cappuccino Nóng", price: 55000, image: "//cdn.hstatic.net/products/1000075078/cappucino_nong_fa141e298bc843d8a934a720189bf3e2_large.png" },
+                { id: 7, name: "Caramel Macchiato Đá", price: 65000, image: "//cdn.hstatic.net/products/1000075078/caramel_macchiato_da_5549b94596d94133973b97ea2d04d735_large.png" },
+                { id: 8, name: "Caramel Macchiato Nóng", price: 69000, image: "//cdn.hstatic.net/products/1000075078/caramel_macchiato_nong_19dcb8fe095f44e58c844f96340db62a_large.png" },
+                { id: 9, name: "Bạc Xỉu", price: 39000, image: "//cdn.hstatic.net/products/1000075078/bac_xiu_truyen_thong_2694ea6d85c047fa9a559c2a85f0e766_large.png" },
+                { id: 10, name: "Bạc Xỉu Nóng", price: 39000, image: "//cdn.hstatic.net/products/1000075078/bac_xiu_truyen_thong_nong_3cf582dc460a422b939c62f86e41ee4e_large.png" },
+                { id: 11, name: "Cà Phê Đen Nóng", price: 39000, image: "//cdn.hstatic.net/products/1000075078/ca_phe_phin_den_nong_841bd93375e64d0ba7f4067770fdbd44_large.png" },
+                { id: 12, name: "Cà Phê Sữa Nóng", price: 39000, image: "//cdn.hstatic.net/products/1000075078/ca_phe_phin_nau_nong_249262a0d36a4861932e17efb9706d13_large.png" },
+                { id: 13, name: "Cà Phê Đen Đá", price: 39000, image: "//cdn.hstatic.net/products/1000075078/ca_phe_phin_den_da_66c9be0094354e8693117543770b2661_large.png" },
+                { id: 14, name: "Cà Phê Sữa Đá", price: 39000, image: "//cdn.hstatic.net/products/1000075078/ca_phe_phin_nau_da_73fed306bafb4f87b4cb44573c900388_large.png" }
+            ],
+            americano: [
+                { id: 15, name: "A-Mê Classic", price: 39000, image: "//cdn.hstatic.net/products/1000075078/a-me_classic_dfbdc3b2b0124ca7bb3b177fb12871c1_large.png" },
+                { id: 16, name: "A-Mê Đào", price: 49000, image: "//cdn.hstatic.net/products/1000075078/a-me_dao_ace66054e028494cbe99a8d610b7e20a_large.png" },
+                { id: 17, name: "A-Mê Mơ", price: 49000, image: "//cdn.hstatic.net/products/1000075078/a-me_mo_12544504de6947ae9090b070228d4613_large.png" },
+                { id: 18, name: "A-Mê Thanh Yên", price: 49000, image: "//cdn.hstatic.net/products/1000075078/a-me_quat_25014a11329e471abb889058ffd99c52_large.png" }
+            ],
+            tea: [
+                { id: 19, name: "Oolong Tứ Quý Sen (Nóng)", price: 59000, image: "//cdn.hstatic.net/products/1000075078/oolong_tu_quy_sen_nong_eb6f855cb05a423cbce31805f4a09dab_large.png" },
+                { id: 20, name: "Oolong Tứ Quý Sen", price: 49000, image: "//cdn.hstatic.net/products/1000075078/oolong_tu_quy_sen_da_45f85b5cedf64902b2a85fb969372d82_large.png" },
+                { id: 21, name: "Oolong Tứ Quý Dâu Trân Châu", price: 49000, image: "//cdn.hstatic.net/products/1000075078/oolong_tu_quy_dau_tran_chau_e16a21319d284927af10d285948655e2_large.png" },
+                { id: 22, name: "Oolong Tứ Quý Vải", price: 49000, image: "//cdn.hstatic.net/products/1000075078/oolong_tu_quy_vai_e13b8e1c16064950a8376cb1878401b4_large.png" }
+            ],
+            milktea: [
+                { id: 23, name: "Trà Sữa Oolong Nướng Sương Sáo", price: 55000, image: "//cdn.hstatic.net/products/1000075078/tra_sua_oolong_nuong_suong_sao_95c0a6f5fd9c4343a88505ca3e699015_large.png" },
+                { id: 24, name: "Trà Sữa Oolong Tứ Quý Sương Sáo", price: 55000, image: "//cdn.hstatic.net/products/1000075078/tra_sua_oolong_tu_quy_suong_sao_99957a3486db42ecbf507cc59210e3c0_large.png" },
+                { id: 25, name: "Hồng Trà Sữa Nóng", price: 55000, image: "//cdn.hstatic.net/products/1000075078/hong_tra_sua_nong_3e93c4b96fe040fd809e0260828afc95_large.png" },
+                { id: 26, name: "Hồng Trà Sữa Trân Châu", price: 55000, image: "//cdn.hstatic.net/products/1000075078/hong_tra_sua_tran_chau_7f0f8a483cac43c5b22f9eeade9a847b_large.png" },
+                { id: 27, name: "Trà Đen Macchiato", price: 55000, image: "//cdn.hstatic.net/products/1000075078/tra_den_macchiato_87937ed75a234e51a6a0e5fac3a711e6_large.png" },
+                { id: 28, name: "Trà Sữa Oolong BLao", price: 39000, image: "//cdn.hstatic.net/products/1000075078/tra_sua_oolong_blao_c534df6c04ec4566a04d3a1efd9e27ce_large.png" }
+            ],
+            matcha: [
+                { id: 29, name: "Matcha Latte Tây Bắc", price: 45000, image: "//cdn.hstatic.net/products/1000075078/matcha_latte_tay_bac_da_d5ba2ffade1e4917ab810e626805bc18_large.png" },
+                { id: 30, name: "Matcha Latte Tây Bắc (Nóng)", price: 49000, image: "//cdn.hstatic.net/products/1000075078/matcha_latte_tay_bac_nong_d591c8251dc64fb987118a408e861b09_large.png" },
+                { id: 31, name: "Matcha Latte Tây Bắc Sữa Yến Mạch (Nóng)", price: 55000, image: "//cdn.hstatic.net/products/1000075078/matcha_latte_tay_bac_yen_mach_nong_3c7728e6b1a34ba0b735ae95fa789c61_large.png" },
+                { id: 32, name: "Matcha Latte Tây Bắc Sữa Yến Mạch", price: 55000, image: "//cdn.hstatic.net/products/1000075078/matcha_latte_tay_bac_yen_mach_da_947c966556b940ec8c867b20e3165112_large.png" },
+                { id: 33, name: "Matcha Latte", price: 55000, image: "//product.hstatic.net/1000075078/product/1745246722_matcha-latte_805657f9e18948e6a6218bbce3e8fbe4_large.png" },
+                { id: 34, name: "Matcha Tây Bắc Trân Châu Hoàng Kim", price: 49000, image: "//product.hstatic.net/1000075078/product/1745246677_matcha-dao-copy_ab2fbd66086240d7a49804ee1d317cbf_large.png" }
+            ],
+            chocolate: [
+                { id: 35, name: "Chocolate Đá", price: 55000, image: "//product.hstatic.net/1000075078/product/1737355560_chocolate-da_93e902464187494a8d309db309796206_large.png" },
+                { id: 36, name: "Chocolate Nóng", price: 55000, image: "//product.hstatic.net/1000075078/product/1737355571_chocolate-nong_c7331fe6900b403c83633a435f3527ac_large.png" }
+            ],
+            frappe: [
+                { id: 37, name: "Frappe Matcha Tây Bắc", price: 65000, image: "//product.hstatic.net/1000075078/product/1746441845_matcha-frappe_bc025cb542b146d1aadbd91fe61c6f09_large.png" },
+                { id: 38, name: "Frappe Almond", price: 65000, image: "//product.hstatic.net/1000075078/product/1746443342_almond-frappe_fc2ee816d45c48da9df254272fa54e2f_large.png" },
+                { id: 39, name: "Frappe Hazelnut", price: 65000, image: "//product.hstatic.net/1000075078/product/1746443470_halzenut-frappe_2bf7cd6836de4d9392496214efbe0915_large.png" },
+                { id: 40, name: "Frappe Choco Chip", price: 65000, image: "//product.hstatic.net/1000075078/product/1746460836_choco-chip-frappe_81622b7415704acdb45538b7c621acab_large.png" }
+            ],
+            food: [
+                { id: 41, name: "Bánh Mì Que Chà Bông Phô Mai Bơ Cay", price: 22000, image: "//product.hstatic.net/1000075078/product/1737355270_bmq-cha-bong-pm_34e407eef2a947f28c6e9892e47b3f68_large.png" },
+                { id: 42, name: "Bánh Mì Que Bò Nấm Xốt Bơ", price: 22000, image: "//product.hstatic.net/1000075078/product/1737355257_bmq-bo-nam_160a1e2a36b14f89b3ef0c61cda229ad_large.png" },
+                { id: 43, name: "Bánh Mì Que Pate Cột Đèn", price: 19000, image: "//product.hstatic.net/1000075078/product/1737355276_bmq-pate-hai-phong_8e0d00ff7cf44d4e9eb504948ed4697c_large.png" },
+                { id: 44, name: "Croissant trứng muối", price: 39000, image: "//product.hstatic.net/1000075078/product/1737355222_croissant-trung-muoi_9df010a37f134f2d9510881b5b7f082e_large.png" },
+                { id: 45, name: "Butter Croissant Sữa Đặc", price: 35000, image: "//product.hstatic.net/1000075078/product/1737355374_croissant-sua-dac_6c48c99afd904d78b81e821df12a1dba_large.png" },
+                { id: 46, name: "Chà Bông Phô Mai", price: 39000, image: "//product.hstatic.net/1000075078/product/1737355233_bami-cha-bong-pho-mai_9a05ef95cc8649b6b9292a027f5208dd_large.png" },
+                { id: 47, name: "Mít Sấy", price: 20000, image: "//product.hstatic.net/1000075078/product/1737355404_mit-say_9875ab69144b4fcc9d07535bfb58c92d_large.png" },
+                { id: 48, name: "Mochi Kem Trà Sữa Trân Châu", price: 19000, image: "//product.hstatic.net/1000075078/product/1737355411_mochi-tra-sua_5950a2ce430440d5bbe33527b7e10021_large.png" },
+                { id: 49, name: "Mochi Kem Phúc Bồn Tử", price: 19000, image: "//product.hstatic.net/1000075078/product/1737355355_mochi-phuc-bon-tu_ac9e0f60acbf43f89a7f6b1a0bcc743c_large.png" },
+                { id: 50, name: "Mochi Kem Việt Quất", price: 19000, image: "//product.hstatic.net/1000075078/product/1737355361_mochi-viet-quat_059d54c9074b4ad89f8a27eff9e3e709_large.png" },
+                { id: 51, name: "Mochi Kem Chocolate", price: 19000, image: "//product.hstatic.net/1000075078/product/1737355348_mochi-choco_625d69b4f92d4cb3b2814bcb24a094ba_large.png" },
+                { id: 52, name: "Mochi Kem Matcha", price: 19000, image: "//product.hstatic.net/1000075078/product/1737355341_mochi-matcha_c8c0db21b77349b0adb23bd6ff0da2a2_large.png" },
+                { id: 53, name: "Mousse Tiramisu", price: 35000, image: "//product.hstatic.net/1000075078/product/1737355334_tiramisu_02b51263d15e419aa7da19528c369fa3_large.png" },
+                { id: 54, name: "Mousse Gấu Chocolate", price: 39000, image: "//product.hstatic.net/1000075078/product/1737355325_mouse-gau-choco_5955c2483e1c47ad923d5fb402aa038e_large.png" },
+                { id: 55, name: "Butter Croissant", price: 29000, image: "//product.hstatic.net/1000075078/product/1737355250_croissant_edd90f1e46f84bcb978bdfc6a0fa0141_large.png" }
+            ]
+        };
+
+        // Global variables
+        let cart = [];
+        let currentUser = null;
+        let currentPage = 'home';
+        let userAddresses = [];
+
+        // DOM elements
+        const productsContainer = document.getElementById('productsContainer');
+        const popularProducts = document.getElementById('popularProducts');
+        const cartBtn = document.getElementById('cartBtn');
+        const cartModal = document.getElementById('cartModal');
+        const closeCartBtn = document.getElementById('closeCartBtn');
+        const cartItems = document.getElementById('cartItems');
+        const checkoutItems = document.getElementById('checkoutItems');
+        const cartCount = document.getElementById('cartCount');
+        const cartTotal = document.getElementById('cartTotal');
+        const subtotal = document.getElementById('subtotal');
+        const totalAmount = document.getElementById('totalAmount');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toastMessage');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const contactForm = document.getElementById('contactForm');
+        const userBtn = document.getElementById('userBtn');
+        const profileBtn = document.getElementById('profileBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const mobileProfileLink = document.getElementById('mobileProfileLink');
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            checkLoginStatus();
+            loadPopularProducts();
+            setupEventListeners();
+        });
+
+        // Check login status
+        function checkLoginStatus() {
+            const user = localStorage.getItem('currentUser');
+            if (user) {
+                currentUser = JSON.parse(user);
+                updateUserUI();
+                loadUserAddresses();
+            }
+        }
+
+        // Update user UI
+        function updateUserUI() {
+            if (currentUser) {
+                userBtn.classList.add('hidden');
+                profileBtn.classList.remove('hidden');
+                logoutBtn.classList.remove('hidden');
+                mobileProfileLink.classList.remove('hidden');
+            } else {
+                userBtn.classList.remove('hidden');
+                profileBtn.classList.add('hidden');
+                logoutBtn.classList.add('hidden');
+                mobileProfileLink.classList.add('hidden');
+            }
+        }
+
+        // Page navigation
+        function showPage(pageName) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            const pageElement = document.getElementById(pageName + 'Page');
+            if (pageElement) {
+                pageElement.classList.add('active');
+                currentPage = pageName;
+                
+                // Load page-specific content
+                if (pageName === 'menu') {
+                    renderProducts('all');
+                } else if (pageName === 'checkout') {
+                    renderCheckout();
+                } else if (pageName === 'profile') {
+                    loadProfileData();
+                }
+            }
+            
+            // Close mobile menu
+            mobileMenu.classList.add('hidden');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Category tabs
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.category-tab').forEach(t => {
+                        t.classList.remove('active');
+                        t.classList.add('bg-gray-200');
+                    });
+                    tab.classList.add('active');
+                    tab.classList.remove('bg-gray-200');
+                    renderProducts(tab.dataset.category);
+                });
+            });
+            
+            // Cart modal
+            cartBtn.addEventListener('click', () => {
+                cartModal.classList.remove('hidden');
+                renderCart();
+            });
+            
+            closeCartBtn.addEventListener('click', () => {
+                cartModal.classList.add('hidden');
+            });
+            
+            // Mobile menu
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Contact form
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                showToast('Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất.');
+                contactForm.reset();
+            });
+            
+            // Close modal when clicking outside
+            cartModal.addEventListener('click', (e) => {
+                if (e.target === cartModal) {
+                    cartModal.classList.add('hidden');
+                }
+            });
+        }
+
+        // Load popular products
+        function loadPopularProducts() {
+            const popularList = [];
+            Object.values(products).forEach(categoryProducts => {
+                popularList.push(...categoryProducts.slice(0, 2));
+            });
+            
+            popularProducts.innerHTML = '';
+            popularList.slice(0, 8).forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card bg-white rounded-lg shadow-md overflow-hidden';
+                productCard.innerHTML = `
+                    <div class="h-40 overflow-hidden">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-sm mb-2">${product.name}</h3>
+                        <div class="flex justify-between items-center">
+                            <span class="text-indigo-600 font-bold text-sm">${formatPrice(product.price)}</span>
+                            <button class="add-to-cart bg-indigo-600 text-white px-2 py-1 rounded text-sm hover:bg-indigo-700 transition" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}" data-image="${product.image}">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                popularProducts.appendChild(productCard);
+            });
+            
+            // Add event listeners to add to cart buttons
+            document.querySelectorAll('.add-to-cart').forEach(btn => {
+                btn.addEventListener('click', addToCart);
+            });
+        }
+
+        // Render products
+        function renderProducts(category) {
+            productsContainer.innerHTML = '';
+            let productsToRender = [];
+            
+            if (category === 'all') {
+                Object.values(products).forEach(categoryProducts => {
+                    productsToRender = [...productsToRender, ...categoryProducts];
+                });
+            } else {
+                productsToRender = products[category] || [];
+            }
+            
+            productsToRender.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card bg-white rounded-lg shadow-md overflow-hidden';
+                productCard.innerHTML = `
+                    <div class="h-48 overflow-hidden">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-lg mb-2">${product.name}</h3>
+                        <div class="flex justify-between items-center">
+                            <span class="text-indigo-600 font-bold">${formatPrice(product.price)}</span>
+                            <button class="add-to-cart bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-700 transition" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}" data-image="${product.image}">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                productsContainer.appendChild(productCard);
+            });
+            
+            // Add event listeners to add to cart buttons
+            document.querySelectorAll('.add-to-cart').forEach(btn => {
+                btn.addEventListener('click', addToCart);
+            });
+        }
+
+        // Add to cart
+        function addToCart(e) {
+            const btn = e.currentTarget;
+            const product = {
+                id: btn.dataset.id,
+                name: btn.dataset.name,
+                price: parseInt(btn.dataset.price),
+                image: btn.dataset.image,
+                quantity: 1
+            };
+            
+            // Check if product already in cart
+            const existingItem = cart.find(item => item.id === product.id);
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push(product);
+            }
+            
+            updateCart();
+            showToast(`${product.name} đã được thêm vào giỏ hàng!`);
+        }
+
+        // Update cart
+        function updateCart() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = count;
+        }
+
+        // Render cart
+        function renderCart() {
+            cartItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="text-center text-gray-500">Giỏ hàng trống</p>';
+                cartTotal.textContent = '0 đ';
+                return;
+            }
+            
+            let total = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'flex items-center space-x-4';
+                cartItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded">
+                    <div class="flex-1">
+                        <h4 class="font-semibold">${item.name}</h4>
+                        <div class="flex items-center space-x-2">
+                            <button class="decrease-qty bg-gray-200 w-6 h-6 rounded flex items-center justify-center" data-id="${item.id}">-</button>
+                            <span>${item.quantity}</span>
+                            <button class="increase-qty bg-gray-200 w-6 h-6 rounded flex items-center justify-center" data-id="${item.id}">+</button>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="font-semibold">${formatPrice(itemTotal)}</div>
+                        <button class="remove-item text-red-500 text-sm" data-id="${item.id}">Xóa</button>
+                    </div>
+                `;
+                cartItems.appendChild(cartItem);
+            });
+            
+            cartTotal.textContent = formatPrice(total);
+            
+            // Add event listeners to cart item buttons
+            document.querySelectorAll('.decrease-qty').forEach(btn => {
+                btn.addEventListener('click', decreaseQuantity);
+            });
+            
+            document.querySelectorAll('.increase-qty').forEach(btn => {
+                btn.addEventListener('click', increaseQuantity);
+            });
+            
+            document.querySelectorAll('.remove-item').forEach(btn => {
+                btn.addEventListener('click', removeFromCart);
+            });
+        }
+
+        // Render checkout
+        function renderCheckout() {
+            checkoutItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                checkoutItems.innerHTML = '<p class="text-center text-gray-500">Giỏ hàng trống</p>';
+                subtotal.textContent = '0 đ';
+                totalAmount.textContent = '15.000 đ';
+                return;
+            }
+            
+            let total = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const checkoutItem = document.createElement('div');
+                checkoutItem.className = 'flex items-center space-x-4 pb-4 border-b';
+                checkoutItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="w-20 h-20 object-cover rounded">
+                    <div class="flex-1">
+                        <h4 class="font-semibold">${item.name}</h4>
+                        <p class="text-gray-600">Số lượng: ${item.quantity}</p>
+                    </div>
+                    <div class="text-right">
+                        <div class="font-semibold">${formatPrice(itemTotal)}</div>
+                    </div>
+                `;
+                checkoutItems.appendChild(checkoutItem);
+            });
+            
+            subtotal.textContent = formatPrice(total);
+            totalAmount.textContent = formatPrice(total + 15000);
+            
+            // Pre-fill delivery info if user is logged in
+            if (currentUser) {
+                document.getElementById('deliveryName').value = currentUser.name || '';
+                document.getElementById('deliveryPhone').value = currentUser.phone || '';
+            }
+        }
+
+        // Decrease quantity
+        function decreaseQuantity(e) {
+            const id = e.currentTarget.dataset.id;
+            const item = cart.find(item => item.id === id);
+            if (item) {
+                item.quantity--;
+                if (item.quantity === 0) {
+                    removeFromCart(e);
+                } else {
+                    updateCart();
+                    renderCart();
+                }
+            }
+        }
+
+        // Increase quantity
+        function increaseQuantity(e) {
+            const id = e.currentTarget.dataset.id;
+            const item = cart.find(item => item.id === id);
+            if (item) {
+                item.quantity++;
+                updateCart();
+                renderCart();
+            }
+        }
+
+        // Remove from cart
+        function removeFromCart(e) {
+            const id = e.currentTarget.dataset.id;
+            cart = cart.filter(item => item.id !== id);
+            updateCart();
+            renderCart();
+        }
+
+        // Login
+        function login() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            // Simple validation (in real app, this would be server-side)
+            if (email && password) {
+                // Get user from localStorage (simulating database)
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                const user = users.find(u => u.email === email && u.password === password);
+                
+                if (user) {
+                    currentUser = user;
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    updateUserUI();
+                    showToast('Đăng nhập thành công!');
+                    showPage('home');
+                } else {
+                    showToast('Email hoặc mật khẩu không đúng!');
+                }
+            }
+        }
+
+        // Register
+        function register() {
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const phone = document.getElementById('registerPhone').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Validation
+            if (password !== confirmPassword) {
+                showToast('Mật khẩu không khớp!');
+                return;
+            }
+            
+            if (name && email && phone && password) {
+                // Get users from localStorage
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                
+                // Check if email already exists
+                if (users.find(u => u.email === email)) {
+                    showToast('Email đã được sử dụng!');
+                    return;
+                }
+                
+                // Add new user
+                const newUser = { name, email, phone, password };
+                users.push(newUser);
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                showToast('Đăng ký thành công! Vui lòng đăng nhập.');
+                showLoginForm();
+            }
+        }
+
+        // Logout
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            updateUserUI();
+            showToast('Đã đăng xuất!');
+            showPage('home');
+        }
+
+        // Show login form
+        function showLoginForm() {
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('registerForm').classList.add('hidden');
+        }
+
+        // Show register form
+        function showRegisterForm() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.remove('hidden');
+        }
+
+        // Place order
+        function placeOrder() {
+            if (!currentUser) {
+                showToast('Vui lòng đăng nhập để đặt hàng!');
+                showPage('login');
+                return;
+            }
+            
+            if (cart.length === 0) {
+                showToast('Giỏ hàng trống!');
+                return;
+            }
+            
+            const name = document.getElementById('deliveryName').value;
+            const phone = document.getElementById('deliveryPhone').value;
+            const address = document.getElementById('deliveryAddress').value;
+            
+            if (!name || !phone || !address) {
+                showToast('Vui lòng điền đầy đủ thông tin giao hàng!');
+                return;
+            }
+            
+            // Create order
+            const order = {
+                id: Date.now(),
+                user: currentUser,
+                items: cart,
+                delivery: { name, phone, address },
+                total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) + 15000,
+                date: new Date().toISOString(),
+                status: 'pending'
+            };
+            
+            // Save order to localStorage
+            const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+            orders.push(order);
+            localStorage.setItem('orders', JSON.stringify(orders));
+            
+            // Clear cart
+            cart = [];
+            updateCart();
+            
+            showToast('Đặt hàng thành công! Chúng tôi sẽ liên hệ sớm.');
+            showPage('home');
+        }
+
+        // Profile functions
+        function loadProfileData() {
+            if (!currentUser) return;
+            
+            // Update profile sidebar
+            document.getElementById('profileName').textContent = currentUser.name || 'Tên người dùng';
+            document.getElementById('profileEmail').textContent = currentUser.email || 'email@example.com';
+            
+            // Load profile info form
+            document.getElementById('profileInfoName').value = currentUser.name || '';
+            document.getElementById('profileInfoPhone').value = currentUser.phone || '';
+            document.getElementById('profileInfoEmail').value = currentUser.email || '';
+            document.getElementById('profileInfoBirthday').value = currentUser.birthday || '';
+            document.getElementById('profileInfoGender').value = currentUser.gender || '';
+            
+            // Load orders
+            loadOrders();
+            
+            // Load addresses
+            renderAddresses();
+        }
+
+        function loadOrders() {
+            const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+            const userOrders = orders.filter(order => order.user.email === currentUser.email);
+            
+            const ordersList = document.getElementById('ordersList');
+            
+            if (userOrders.length === 0) {
+                ordersList.innerHTML = '<p class="text-center text-gray-500">Bạn chưa có đơn hàng nào</p>';
+                return;
+            }
+            
+            ordersList.innerHTML = '';
+            
+            userOrders.forEach(order => {
+                const orderCard = document.createElement('div');
+                orderCard.className = 'order-card bg-gray-50 rounded-lg p-4';
+                
+                const orderDate = new Date(order.date).toLocaleDateString('vi-VN');
+                const statusClass = `status-${order.status}`;
+                const statusText = {
+                    'pending': 'Chờ xử lý',
+                    'processing': 'Đang xử lý',
+                    'completed': 'Hoàn thành',
+                    'cancelled': 'Đã hủy'
+                }[order.status] || 'Chờ xử lý';
+                
+                orderCard.innerHTML = `
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <h4 class="font-semibold">Đơn hàng #${order.id}</h4>
+                            <p class="text-sm text-gray-600">Ngày đặt: ${orderDate}</p>
+                        </div>
+                        <span class="status-badge ${statusClass}">${statusText}</span>
+                    </div>
+                    <div class="mb-3">
+                        <p class="text-sm text-gray-600 mb-1">Địa chỉ giao hàng:</p>
+                        <p class="text-sm">${order.delivery.address}</p>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="font-semibold">${formatPrice(order.total)}</span>
+                        <button class="text-indigo-600 hover:text-indigo-800 text-sm">Xem chi tiết</button>
+                    </div>
+                `;
+                
+                ordersList.appendChild(orderCard);
+            });
+        }
+
+        function loadUserAddresses() {
+            if (!currentUser) return;
+            
+            const addresses = JSON.parse(localStorage.getItem(`addresses_${currentUser.email}`) || '[]');
+            userAddresses = addresses;
+        }
+
+        function renderAddresses() {
+            const addressesList = document.getElementById('addressesList');
+            
+            if (userAddresses.length === 0) {
+                addressesList.innerHTML = '<p class="text-center text-gray-500">Bạn chưa có địa chỉ nào</p>';
+                return;
+            }
+            
+            addressesList.innerHTML = '';
+            
+            userAddresses.forEach((address, index) => {
+                const addressCard = document.createElement('div');
+                addressCard.className = 'bg-gray-50 rounded-lg p-4';
+                addressCard.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h4 class="font-semibold">${address.name}</h4>
+                            <p class="text-sm text-gray-600">${address.phone}</p>
+                            <p class="text-sm">${address.detail}</p>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="text-indigo-600 hover:text-indigo-800 text-sm">Sửa</button>
+                            <button class="text-red-500 hover:text-red-700 text-sm" onclick="deleteAddress(${index})">Xóa</button>
+                        </div>
+                    </div>
+                `;
+                
+                addressesList.appendChild(addressCard);
+            });
+        }
+
+        function showProfileTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.profile-tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            
+            // Update tab buttons
+            document.querySelectorAll('.profile-tab').forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.add('bg-gray-100');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName + 'Tab').classList.remove('hidden');
+            event.target.classList.add('active');
+            event.target.classList.remove('bg-gray-100');
+        }
+
+        function updateProfileInfo() {
+            const name = document.getElementById('profileInfoName').value;
+            const phone = document.getElementById('profileInfoPhone').value;
+            const email = document.getElementById('profileInfoEmail').value;
+            const birthday = document.getElementById('profileInfoBirthday').value;
+            const gender = document.getElementById('profileInfoGender').value;
+            
+            // Update current user
+            currentUser = { ...currentUser, name, phone, email, birthday, gender };
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            
+            // Update users list
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const userIndex = users.findIndex(u => u.email === currentUser.email);
+            if (userIndex !== -1) {
+                users[userIndex] = currentUser;
+                localStorage.setItem('users', JSON.stringify(users));
+            }
+            
+            // Update profile sidebar
+            document.getElementById('profileName').textContent = name;
+            document.getElementById('profileEmail').textContent = email;
+            
+            showToast('Cập nhật thông tin thành công!');
+        }
+
+        function changePassword() {
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+            
+            if (newPassword !== confirmNewPassword) {
+                showToast('Mật khẩu mới không khớp!');
+                return;
+            }
+            
+            // Get users from localStorage
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const userIndex = users.findIndex(u => u.email === currentUser.email);
+            
+            if (userIndex !== -1 && users[userIndex].password === currentPassword) {
+                users[userIndex].password = newPassword;
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                // Update current user
+                currentUser.password = newPassword;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                // Clear form
+                document.getElementById('currentPassword').value = '';
+                document.getElementById('newPassword').value = '';
+                document.getElementById('confirmNewPassword').value = '';
+                
+                showToast('Đổi mật khẩu thành công!');
+            } else {
+                showToast('Mật khẩu hiện tại không đúng!');
+            }
+        }
+
+        function showAddAddressForm() {
+            document.getElementById('addAddressForm').classList.remove('hidden');
+        }
+
+        function hideAddAddressForm() {
+            document.getElementById('addAddressForm').classList.add('hidden');
+            document.getElementById('newAddressForm').reset();
+        }
+
+        function addAddress() {
+            const name = document.getElementById('addressName').value;
+            const phone = document.getElementById('addressPhone').value;
+            const detail = document.getElementById('addressDetail').value;
+            
+            if (!name || !phone || !detail) {
+                showToast('Vui lòng điền đầy đủ thông tin!');
+                return;
+            }
+            
+            const newAddress = { name, phone, detail };
+            userAddresses.push(newAddress);
+            
+            // Save to localStorage
+            localStorage.setItem(`addresses_${currentUser.email}`, JSON.stringify(userAddresses));
+            
+            // Update UI
+            renderAddresses();
+            hideAddAddressForm();
+            
+            showToast('Thêm địa chỉ thành công!');
+        }
+
+        function deleteAddress(index) {
+            if (confirm('Bạn có chắc chắn muốn xóa địa chỉ này?')) {
+                userAddresses.splice(index, 1);
+                
+                // Save to localStorage
+                localStorage.setItem(`addresses_${currentUser.email}`, JSON.stringify(userAddresses));
+                
+                // Update UI
+                renderAddresses();
+                
+                showToast('Xóa địa chỉ thành công!');
+            }
+        }
+
+        // Format price
+        function formatPrice(price) {
+            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            toastMessage.textContent = message;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
